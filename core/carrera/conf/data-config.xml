@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+  <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://v1s30b5.orbis.pe:3307/db_aptitus4c_dev?zeroDateTimeBehavior=convertToNull"
+  batchSize="-1" user="usr_aptit4c_dev" password="PvyQo3tZsXJcNgqiYEKa" convertType="true" />
+  <document>
+       <entity name="carrera" transformer="DateFormatTransformer" 
+         query="SELECT id as id_carrera, id_tipo_carrera, nombre, slug FROM carrera">
+          <!-- =========================================== Carrera ============================================== -->
+          <field name="id_carrera" column="id_carrera"/>
+          <field name="id_tipo_carrera" column="id_tipo_carrera"/>
+          <field name="nombre" column="nombre"/>
+          <field name="slug" column="slug"/>
+          <!--autocomplete-->
+      </entity>
+  </document>
+</dataConfig>

@@ -1,0 +1,10 @@
+params:
+  ENV: "dev"
+  DEPLOY_REGION: "eu-west-1"
+  BRANCH: "dev4c"
+  SOLR_HOST: "v1s30b5.orbis.pe"
+  SOLR_PORT: "3307"
+  SOLR_DATABASE: "db_aptitus4c_dev"
+  SOLR_DBUSER: "usr_aptit4c_dev"
+  SOLR_DBPASSWORD: "PvyQo3tZsXJcNgqiYEKa"
+  INFRA_BUCKET: "infraestructura.dev"

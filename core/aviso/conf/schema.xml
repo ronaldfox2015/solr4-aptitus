@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one or more
+ contributor license agreements.  See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ The ASF licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+     http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<schema name="aviso" version="1.0">
+   <types>
+    <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" omitNorms="true" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="4" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="4" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.TrieFloatField" precisionStep="4" omitNorms="true" positionIncrementGap="0"/>
+    <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+    <fieldType name="date" class="solr.TrieDateField" omitNorms="true" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="datetime" class="solr.TrieDateField" omitNorms="true" precisionStep="6" positionIncrementGap="0"/>
+
+    <fieldType name="text_split" class="solr.TextField">
+        <analyzer type="index">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.ASCIIFoldingFilterFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <!--<filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>-->
+        </analyzer>
+        <analyzer type="query">
+            <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+            <filter class="solr.ASCIIFoldingFilterFactory"/>
+            <filter class="solr.LowerCaseFilterFactory"/>
+            <!--<filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>-->
+        </analyzer>
+    </fieldType>
+
+       <fieldType name="text_split_similars" class="solr.TextField">
+           <analyzer type="index">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+           </analyzer>
+           <analyzer type="query">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+               <filter class="solr.SynonymFilterFactory" synonyms="similars.txt" ignoreCase="true" expand="true"/>
+           </analyzer>
+       </fieldType>
+
+       <fieldType name="text_split_synonyms" class="solr.TextField">
+           <analyzer type="index">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+           </analyzer>
+           <analyzer type="query">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+               <filter class="solr.SynonymFilterFactory" synonyms="synonyms_ea.txt" ignoreCase="true" expand="true"/>
+           </analyzer>
+       </fieldType>
+
+       <fieldType name="text_split_all" class="solr.TextField">
+           <analyzer type="index">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+           </analyzer>
+           <analyzer type="query">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+               <filter class="solr.SynonymFilterFactory" synonyms="similirs_synonyms.txt" ignoreCase="true" expand="true"/>
+           </analyzer>
+       </fieldType>
+
+       <fieldType name="text_split_search" class="solr.TextField">
+           <analyzer type="index">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+           </analyzer>
+           <analyzer type="query">
+               <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+               <filter class="solr.ASCIIFoldingFilterFactory"/>
+               <filter class="solr.LowerCaseFilterFactory"/>
+               <filter class="solr.StopFilterFactory" format="snowball" words="stopwords.txt" ignoreCase="true"/>
+               <filter class="solr.SynonymFilterFactory" synonyms="synonyms_ea_s.txt" ignoreCase="true" expand="true"/>
+           </analyzer>
+       </fieldType>
+
+    <fieldType name="commaDelimited" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.PatternTokenizerFactory" pattern=",\s*" />
+      </analyzer>
+   </fieldType>
+
+    <fieldType name="midDelimited" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.PatternTokenizerFactory" pattern="#\s*" />
+      </analyzer>
+   </fieldType>
+
+    <fieldType name="tildeInsensitive" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+      </analyzer>
+   </fieldType>
+  </types>
+
+ <fields>
+  <!-- =========================================== AVISOS ============================================== -->
+
+    <field name="_version_" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="adecsys_code" type="commaDelimited" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="area" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="areaslug" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="area_busqueda" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="genero" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="edad" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="lugar_residencia" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="carrera" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="carrera_busqueda" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="carreraslug" type="commaDelimited" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="creado_por" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="dataempresa" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="description" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="description_busqueda" type="tildeInsensitive" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="responsabilidades" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="destacado" type="int" indexed="true" stored="true" multiValued="false" required="false" />
+    <field name="destacado_expoferia" type="int" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="discapacidad" type="string" indexed="true" stored="true" multiValued="false" required="false" />
+    <field name="empresa" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="empresa_rs" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="empresa_rs_busqueda" type="tildeInsensitive" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="empresaslug" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="estudio" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="otro_estudio" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="experiencia" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="fecha_publi"  type="date" indexed="true" stored="true" multiValued="false" default="0000-00-00" required="false"/>
+    <field name="fecha_publicacion"  type="datetime" indexed="true" stored="true" multiValued="false" default="0000-00-00 00:00:00" required="false"/>
+    <field name="fh_vencimiento_proceso"  type="date" indexed="true" stored="true" multiValued="false" default="0000-00-00" required="false"/>
+    <field name="fh_vencimiento" type="datetime" indexed="true" stored="true" multiValued="false" default="0000-00-00 00:00:00" required="false"/>
+    <field name="dias_vencimiento" type="int" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="id_anuncio_web" type="int" indexed="true" stored="true" multiValued="false" required="true"/>
+    <field name="id_empresa" type="int" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="all_ubigeo" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="idioma" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="logoanuncio" type="string" indexed="true" stored="true" multiValued="false" required="false" />
+    <field name="modalidad" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="mostrar_empresa" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="mostrar_otra_empresa" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="mostrar_salario" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="salario_negociable" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="nivel" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="nivel_busqueda" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="nivelslug" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="nombre_comercial" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="nom_com_busqueda" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="programa" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="pregunta" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="pregunta_alternativa" type="string" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="price" type="float" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="price2" type="float" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="prioridad" type="int" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="puesto" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+     <field name="puesto_si" type="text_split_similars" indexed="true" stored="true" multiValued="false" required="false"/>
+     <field name="puesto_sy" type="text_split_synonyms" indexed="true" stored="true" multiValued="false" required="false"/>
+     <field name="puesto_all" type="text_split_all" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="puesto_busqueda" type="tildeInsensitive" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="puesto_ft" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="razon_social" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="razon_comercial_busqueda" type="text_split" indexed="true" stored="true" multiValued="false"/>
+    <field name="ruc" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="slugaviso" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="tipo_carrera" type="midDelimited" indexed="true" stored="true" multiValued="true" required="false"/>
+    <field name="ubicacion" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="ubicacion_busqueda" type="text_split" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="ubicacionslug" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="url" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="url_id" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="departamento" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="origen" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+    <field name="id_producto" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
+
+     <field name="busqueda_libre" type="text_split_search" indexed="true" required="false" stored="true" multiValued="true"/>
+     <copyField source="adecsys_code" dest="busqueda_libre"/>
+     <copyField source="url_id" dest="busqueda_libre"/>
+     <copyField source="puesto" dest="busqueda_libre"/>
+     <copyField source="puesto_si" dest="busqueda_libre"/>
+     <copyField source="puesto_sy" dest="busqueda_libre"/>
+     <copyField source="puesto_all" dest="busqueda_libre"/>
+     <copyField source="empresa_rs" dest="busqueda_libre"/>
+     <copyField source="ubicacion" dest="busqueda_libre"/>
+     <copyField source="nivel_busqueda" dest="busqueda_libre"/>
+     <copyField source="area_busqueda" dest="busqueda_libre"/>
+
+ </fields>
+ <uniqueKey>id_anuncio_web</uniqueKey>
+ <solrQueryParser defaultOperator="OR"/>
+</schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+  <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://v1s30b5.orbis.pe:3307/db_aptitus4c_dev?zeroDateTimeBehavior=convertToNull"
+              batchSize="-1" user="usr_aptit4c_dev" password="PvyQo3tZsXJcNgqiYEKa" convertType="true" encoding="UTF-8" />
+    <document>
+        <entity name="programas" transformer="DateFormatTransformer"
+                query="SELECT id,nombre,UPPER(nombre) AS nombre_busqueda FROM programa_computo">
+            <!-- =========================================== id ============================================== -->
+            <field name="id" column="id"/>
+            <!-- =========================================== nombre ============================================== -->
+            <field name="nombre" column="nombre"/>
+            <!-- =========================================== nombre_busqueda ============================================== -->
+            <field name="nombre_busqueda" column="nombre_busqueda"/>
+            <!--autocomplete-->
+        </entity>
+    </document>
+</dataConfig>

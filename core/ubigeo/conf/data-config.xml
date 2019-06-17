@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+  <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://v1s30b5.orbis.pe:3307/db_aptitus4c_dev?zeroDateTimeBehavior=convertToNull"
+  batchSize="-1" user="usr_aptit4c_dev" password="PvyQo3tZsXJcNgqiYEKa" convertType="true" />
+  <document>
+       <entity name="ubigeo" transformer="DateFormatTransformer"
+           query="SELECT
+     u.id AS ubigeo_id,
+     u.`level` AS ubigeo_level,
+     u.cod_pais AS pais_id,
+     (SELECT nombre FROM (`ubigeo` pais ) WHERE ( u.cod_pais=pais.id )) AS pais_nombre,
+     u.cod_dep AS dpto_id,
+     IF(u.cod_dep=0,'',(SELECT nombre FROM (`ubigeo` dep ) WHERE ( u.cod_dep=dep.id ))) AS dpto_nombre,
+     u.cod_prov AS prov_id,
+     IF(u.cod_prov=0,'',(SELECT nombre FROM (`ubigeo` prov ) WHERE ( u.cod_prov=prov.id ))) AS prov_nombre,
+     u.cod_dist AS dist_id,
+     IF(u.cod_dist=0,'',(SELECT nombre FROM (`ubigeo` dist ) WHERE ( u.cod_dist=dist.id ))) AS `dist_nombre`,
+     CONCAT(' ',TRIM(CONCAT_WS(' ',LCASE(IF(u.cod_dist=0,'',(SELECT nombre FROM (`ubigeo` dist ) WHERE ( u.cod_dist=dist.id )))),LCASE(IF(u.cod_prov=0,'',(SELECT nombre FROM (`ubigeo` prov ) WHERE ( u.cod_prov=prov.id )))),LCASE(IF(u.cod_dep=0,'',(SELECT nombre FROM (`ubigeo` dep ) WHERE ( u.cod_dep=dep.id )))),LCASE((SELECT nombre FROM (`ubigeo` pais ) WHERE ( u.cod_pais=pais.id )))))) AS `ubicacion`,
+     TRIM(LEADING ', ' FROM CONCAT_WS(', ',LCASE(IF(u.cod_dist=0,'',(SELECT nombre FROM (`ubigeo` dist ) WHERE ( u.cod_dist=dist.id )))),LCASE(IF(u.cod_prov=0,'',(SELECT nombre FROM (`ubigeo` prov ) WHERE ( u.cod_prov=prov.id )))),LCASE(IF(u.cod_dep=0,'',(SELECT nombre FROM (`ubigeo` dep ) WHERE ( u.cod_dep=dep.id )))),LCASE((SELECT nombre FROM (`ubigeo` pais ) WHERE ( u.cod_pais=pais.id )))))  AS `mostrar`,
+     estado AS estado
+FROM (`ubigeo` u )
+WHERE ((u.`cod_dist`=0) OR ( (u.`cod_prov` IN (3927,3285)) AND (u.`cod_dist`&lt;&gt;0))) ">
+             <field name="ubigeo_id" column="ubigeo_id"/>
+             <field name="ubigeo_level" column="ubigeo_level"/>
+             <field name="pais_id" column="pais_id"/>
+             <field name="pais_nombre" column="pais_nombre"/>
+            <!-- =========================================== Departamento ============================================== -->
+            <field name="dpto_id" column="dpto_id"/>
+            <field name="dpto_nombre" column="dpto_nombre"/>
+            <!-- =========================================== Provincia ============================================== -->
+            <field name="prov_id" column="prov_id"/>
+            <field name="prov_nombre" column="prov_nombre"/>
+            <!-- =========================================== Distrito ============================================== -->
+            <field name="dist_id" column="dist_id"/>
+            <field name="dist_nombre" column="dist_nombre"/>
+            <!--autocomplete-->
+            <field name="ubicacion" column="ubicacion"/>
+            <field name="mostrar" column="mostrar"/>
+            <!--autocomplete-->
+           <field name="estado" column="estado"/>
+        </entity>
+    </document>
+</dataConfig>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataConfig>
+  <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://52.214.56.32/3307?zeroDateTimeBehavior=convertToNull"
+  batchSize="-1" user="usr_aptit4c_dev" password="PvyQo3tZsXJcNgqiYEKa" convertType="true" />
+  <document>
+       <entity name="institucion" transformer="DateFormatTransformer" 
+         query="SELECT id as id_institucion, nombre, extranjero, tipo, id_ubigeo FROM institucion">
+          <!-- =========================================== Institucion ============================================== -->
+          <field name="id_institucion" column="id_institucion"/>
+          <field name="nombre" column="nombre"/>            
+          <field name="extranjero" column="extranjero"/>
+          <field name="tipo" column="tipo"/>
+          <field name="id_ubigeo" column="id_ubigeo"/>
+          <!--autocomplete-->
+      </entity>
+  </document>
+</dataConfig>
